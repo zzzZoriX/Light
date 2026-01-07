@@ -18,7 +18,8 @@ struct FlagsState {
 enum class CallType : int{
     CHECK = 1,
     VERSION = 2,
-    UNDEF = 3,
+    HELP = 3,
+    UNDEF = -1,
 };
 
 #include <vector>
@@ -35,6 +36,7 @@ typedef struct {
 } ArgsInfo;
 
 #define VERSION_CMD     "version"
+#define HELP_CMD        "help"
 #define CHECK_CMD       "check"
 #define NLEAK_FLAG      "-Nleak"
 #define NADDR_FLAG      "-Naddr"

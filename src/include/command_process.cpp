@@ -20,6 +20,14 @@ error process_arguments(ArgsInfo* ainf, arguments args_vec) {
             break;
         }
 
+        if (arg == HELP_CMD) {
+            if (ainf->type != CallType::UNDEF)
+                return MULTICMDERR;
+
+            ainf->type = CallType::HELP;
+            break;
+        }
+
         if (arg == CHECK_CMD) {
             if (ainf->type != CallType::UNDEF) 
                 return MULTICMDERR;
