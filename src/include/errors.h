@@ -2,12 +2,20 @@
 #define ERRORS_H
 
 enum class LightReturnCode : int {
-    SUCCESS = 0,
-    CMDLERR = 1,
+    SUCCESS     = 0,
+    CMDLERR     = 1,
+    MULTARGERR  = 2,
 };
 
 #include "cmd_common.h"
 #include <cstdlib>
+
+using error = std::pair<std::string, LightReturnCode>;
+
+#define NOERR error(\
+                    std::move(std::string("")),\
+                    LightReturnCode::SUCCESS \
+                )
 
 #define LABORT(code, msg) {\
     print_in_one_color(RED, msg);\
