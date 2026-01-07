@@ -20,7 +20,8 @@
         color                               \
     );                                      
 
-using strclr = std::pair<std::string, int>;
+using strclr = std::pair<std::string&, int>;
+using mstrclr = std::pair<std::string&&, int>;
 
 /**
  * @brief print string in one color
@@ -37,5 +38,6 @@ void print_in_one_color(const int color, std::string&& str);
  * @param strs 
  */
 void print_in_many_colors(std::vector<strclr> strs);
+void print_in_many_colors(std::vector<mstrclr> strs);
 
 #endif // CMD_COMMON_H

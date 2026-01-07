@@ -21,3 +21,13 @@ void print_in_many_colors(std::vector<strclr> strs) {
 
     std::cout << std::endl;
 }
+
+void print_in_many_colors(std::vector<mstrclr> strs) {
+    for (auto& str : strs) {
+        SET_CMD_TEXT_COLOR(str.second);
+        std::cout << str.first;
+        SET_CMD_TEXT_COLOR(WHITE);
+    }
+
+    std::cout << std::endl;
+}
