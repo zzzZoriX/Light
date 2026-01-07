@@ -84,6 +84,27 @@ possible solution:
 3   int fourth_elem = array[2];
 ```
 
+## Test example 4:
+### input.cpp:
+``` C++
+int main() {
+    int* test_ptr = new int;
+
+//  some work with "test_ptr"
+
+    delete test_ptr;
+
+    return 0;
+}
+```
+
+### result output:
+``` cmd
+light check -cpp input.cpp
+
+No errors found
+```
+
 
 # Other info
 
