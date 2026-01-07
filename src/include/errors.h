@@ -8,6 +8,7 @@ enum class LightReturnCode : int {
     MULTFLAGERR     = 3,
     UNEXPCMDLERR    = 4,
     NOINPUTSERR     = 5,
+    UNDEFCOMMANDERR = 6,
 };
 
 #include "cmd_common.h"
