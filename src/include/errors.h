@@ -2,9 +2,12 @@
 #define ERRORS_H
 
 enum class LightReturnCode : int {
-    SUCCESS     = 0,
-    CMDLERR     = 1,
-    MULTARGERR  = 2,
+    SUCCESS         = 0,
+    CMDLERR         = 1,
+    MULTARGERR      = 2,
+    MULTFLAGERR     = 3,
+    UNEXPCMDLERR    = 4,
+    NOINPUTSERR     = 5,
 };
 
 #include "cmd_common.h"
