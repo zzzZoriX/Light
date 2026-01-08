@@ -9,14 +9,16 @@ enum class LightReturnCode : int {
     UNEXPCMDLERR    = 4,
     NOINPUTSERR     = 5,
     UNDEFCOMMANDERR = 6,
+    CANTOPENFILEERR = 7,
 };
 
 #include "cmd_common.h"
 #include <cstdlib>
 
-using error = std::pair<std::string, LightReturnCode>;
+template<typename T>
+using error = std::pair<T, LightReturnCode>;
 
-#define NOERR error(\
+#define NOERR error<std::string>(\
                     std::move(std::string("")),\
                     LightReturnCode::SUCCESS \
                 )

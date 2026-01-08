@@ -18,7 +18,7 @@ int main(int count, char** args) {
             .type = CallType::UNDEF
         };
 
-    error process_result = process_arguments(&args_info, args_vec);
+    error<std::string> process_result = process_arguments(&args_info, args_vec);
 
     if (process_result.second != LightReturnCode::SUCCESS)
         LABORT(
