@@ -3,16 +3,22 @@
 
 #include <string>
 #include <vector>
-#include <optional>
 #include "../errors.h"
 
 enum class Checker {
-    LEAK_CHECKER,
-    ADDR_CHECKER,
-    SEGSIG_CHECKER,
+    LEAK_CHECKER = 0,
+    ADDR_CHECKER = 1,
+    SEGSIG_CHECKER = 2,
+};
+
+constexpr std::string str_checkers[3] = {
+    "Leak checker",
+    "Addressing errors checker",
+    "Segmentation faults checker",
 };
 
 enum class CheckerResultType {
+    CHECKOFF,
     CHECKRES,
     LIGHTAPIERR,
 };
@@ -32,5 +38,14 @@ typedef struct chr_res {
     error<std::string> light_api_err;
     checker_info_t checker_result;
 } checker_result_t;
+
+#define CHECKER_SUCCESS(chckr) (checker_result_t){\
+    .res_type = CheckerResultType::CHECKOFF,\
+    .light_api_err = NOERR,\
+    .checker_result = {\
+        chckr,\
+        {}\
+    }\
+}
 
 #endif //CHECKERS_RES_H
