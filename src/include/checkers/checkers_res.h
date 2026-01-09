@@ -23,10 +23,16 @@ enum class CheckerResultType {
     LIGHTAPIERR,
 };
 
+enum class FileResultType {
+    FLLIGHTAPIERR,
+    FLRES,
+};
+
 typedef struct flres {
     bool have_errs;
     std::string err_data,
                 solution;
+    FileResultType flres_t;
 
     flres() noexcept: have_errs(false) {}
 } file_result_t;
