@@ -18,12 +18,12 @@ int main(int count, char** args) {
             .type = CallType::UNDEF
         };
 
-    error<std::string> process_result = process_arguments(&args_info, args_vec);
+    auto [msg, code] = process_arguments(&args_info, args_vec);
 
-    if (process_result.second != LightReturnCode::SUCCESS)
+    if (code != LightReturnCode::SUCCESS)
         LABORT(
-            static_cast<int>(process_result.second), 
-            process_result.first
+            static_cast<int>(code),
+            msg
         );
 
     
@@ -52,6 +52,6 @@ int main(int count, char** args) {
                 std::string("Undefined Light API command!\nFor all available commands enter \"light help\"")
             );
     }
-    
+
     return static_cast<int>(LightReturnCode::SUCCESS);
 }
