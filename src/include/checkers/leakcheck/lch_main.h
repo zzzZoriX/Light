@@ -4,6 +4,7 @@
 #include "../../command_process.h"
 #include "../checkers_res.h"
 #include <fstream>
+#include <vector>
 
 /**
  * @brief check inputs for a memory leak errors
