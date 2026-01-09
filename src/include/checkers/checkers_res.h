@@ -27,6 +27,8 @@ typedef struct flres {
     bool have_errs;
     std::string err_data,
                 solution;
+
+    flres() noexcept: have_errs(false) {}
 } file_result_t;
 
 typedef struct chckr {
