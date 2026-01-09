@@ -24,6 +24,7 @@ enum class CheckerResultType {
 };
 
 typedef struct flres {
+    bool have_errs;
     std::string err_data,
                 solution;
 } file_result_t;
