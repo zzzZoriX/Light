@@ -65,6 +65,26 @@ error process_arguments(ArgsInfo* ainf, arguments args_vec) {
             ainf->fs._Naddr = true;
         }
 
+        else if (arg == CPP_FLAG) {
+            if (ainf->type != CallType::CHECK)
+                return UNEXPFLAG;
+
+            if (ainf->fs._cpp)
+                return MULTIFLAGERR;
+
+            ainf->fs._cpp = true;
+        }
+
+        else if (arg == CPP20ON_FLAG) {
+            if (ainf->type != CallType::CHECK)
+                return UNEXPFLAG;
+
+            if (ainf->fs._cpp_20_on)
+                return MULTIFLAGERR;
+
+            ainf->fs._cpp_20_on = true;
+        }
+
         else {
             if (ainf->type != CallType::CHECK)
                 return UNEXPINPUTS;

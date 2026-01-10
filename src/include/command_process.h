@@ -3,6 +3,7 @@
 
 struct FlagsState {
     bool    _cpp,
+            _cpp_20_on,
             _Nleak,
             _Nsegs,
             _Naddr;
@@ -10,6 +11,7 @@ struct FlagsState {
 
 #define NOFLAGS (struct FlagsState){\
         ._cpp = false,\
+        ._cpp_20_on = false,\
         ._Nleak = false,\
         ._Nsegs = false,\
         ._Naddr = false\
@@ -42,6 +44,7 @@ typedef struct {
 #define NADDR_FLAG      "-Naddr"
 #define NSEGS_FLAG      "-Nsegs"
 #define CPP_FLAG        "-cpp"
+#define CPP20ON_FLAG    "-cpp20"
 
 #define MULTICMDERR error( \
                         std::move(std::string("Multiply command use")), \
