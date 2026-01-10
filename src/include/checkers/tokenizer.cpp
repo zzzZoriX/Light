@@ -8,8 +8,8 @@ token_t tokenize(std::ifstream fpt) {
 
     while (fpt.get(c)) {
         if (spec_chars.find(c) != std::string::npos) {
-            token_t::append(&token, word);
-            token_t::append(&token, c);
+            token.push_back(word);
+            token.push_back({c, '\0'});
 
             word.clear();
         }
