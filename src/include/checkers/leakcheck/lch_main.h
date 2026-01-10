@@ -5,6 +5,7 @@
 #include "../checkers_res.h"
 #include <fstream>
 #include <vector>
+#include "../tokenizer.h"
 
 /**
  * @brief check inputs for a memory leak errors
