@@ -6,6 +6,22 @@
 #include <fstream>
 #include <vector>
 #include "../tokenizer.h"
+#include "lch_data.h"
+
+const std::string C_DEF_MEM_ALLOC_METHODS[] = {
+    "malloc",
+    "calloc",
+    "realloc"
+};
+
+//  C methods + "new" keyword
+const std::string CPP_DEF_MEM_ALLOC_METHODS[] = {
+    "malloc",
+    "calloc",
+    "realloc",
+    "new"
+};
+
 
 /**
  * @brief check inputs for a memory leak errors
