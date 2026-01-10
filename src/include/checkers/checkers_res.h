@@ -34,7 +34,7 @@ typedef struct flres {
                 solution;
     FileResultType flres_t;
 
-    flres() noexcept: have_errs(false) {}
+    flres() noexcept: have_errs(false), flres_t(FileResultType::FLRES) {}
 } file_result_t;
 
 typedef struct chckr {
