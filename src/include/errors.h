@@ -15,10 +15,10 @@ enum class LightReturnCode : int {
 #include "cmd_common.h"
 #include <cstdlib>
 
-template<typename T>
-using error = std::pair<T, LightReturnCode>;
 
-#define NOERR error<std::string>(\
+using error = std::pair<std::string, LightReturnCode>;
+
+#define NOERR error(\
                     std::move(std::string("")),\
                     LightReturnCode::SUCCESS \
                 )

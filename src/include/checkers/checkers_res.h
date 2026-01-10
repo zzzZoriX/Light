@@ -11,7 +11,7 @@ enum class Checker {
     SEGSIG_CHECKER = 2,
 };
 
-constexpr std::string str_checkers[3] = {
+const std::string str_checkers[3] = {
     "Leak checker",
     "Addressing errors checker",
     "Segmentation faults checker",
@@ -44,7 +44,7 @@ typedef struct chckr {
 
 typedef struct chr_res {
     CheckerResultType res_type;
-    error<std::string> light_api_err;
+    error light_api_err;
     checker_info_t checker_result;
 } checker_result_t;
 

@@ -1,5 +1,6 @@
 #include "include/errors.h"
 #include "include/command_process.h"
+#include "include/checkers/leakcheck/lch_main.h"
 
 // v(a/b/_) - alpha/beta/release ; first num - global version id ; second num - patch version id
 #define LIGHTAPIVERSION     "va-0.1"
@@ -43,7 +44,7 @@ int main(int count, char** args) {
             break;
 
             case CallType::CHECK:
-//          TODO: write check command logic 
+            leak_check(args_info);
             break;
 
         default:

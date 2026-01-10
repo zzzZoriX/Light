@@ -43,27 +43,27 @@ typedef struct {
 #define NSEGS_FLAG      "-Nsegs"
 #define CPP_FLAG        "-cpp"
 
-#define MULTICMDERR error<std::string>( \
+#define MULTICMDERR error( \
                         std::move(std::string("Multiply command use")), \
                         LightReturnCode::MULTARGERR \
                     )
 
-#define MULTIFLAGERR error<std::string>( \
+#define MULTIFLAGERR error( \
                         std::move(std::string("Multiply flag defention")), \
                         LightReturnCode::MULTFLAGERR \
                     )
 
-#define UNEXPINPUTS error<std::string>( \
+#define UNEXPINPUTS error( \
                         std::move(std::string("Unexpected input file in command")), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
 
-#define UNEXPFLAG   error<std::string>( \
+#define UNEXPFLAG   error( \
                         std::move(std::string("Unexpected flag defention")), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
 
-#define NOINPUTS    error<std::string>( \
+#define NOINPUTS    error( \
                         std::move(std::string("Check command have not any input files")), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
@@ -78,6 +78,6 @@ typedef struct {
  */
 arguments convert_c_strs_to_cpp(char** cstrs, const int count);
 
-error<std::string> process_arguments(ArgsInfo* ainf, arguments args_vec);
+error process_arguments(ArgsInfo* ainf, arguments args_vec);
 
 #endif // CMDPROC_H
