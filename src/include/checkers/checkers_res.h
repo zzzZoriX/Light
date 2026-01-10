@@ -5,6 +5,8 @@
 #include <vector>
 #include "../errors.h"
 
+using flerrs = std::vector<std::pair<std::string, std::string>>;
+
 enum class Checker {
     LEAK_CHECKER = 0,
     ADDR_CHECKER = 1,
@@ -30,8 +32,7 @@ enum class FileResultType {
 
 typedef struct flres {
     bool have_errs;
-    std::string err_data,
-                solution;
+    flerrs errs;
     FileResultType flres_t;
 
     flres() noexcept: have_errs(false), flres_t(FileResultType::FLRES) {}
