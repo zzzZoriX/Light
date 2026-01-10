@@ -2,9 +2,9 @@
 #define TOKENIZER_H
 
 #include <fstream>
-#include <list>
+#include <vector>
 
-using token_t = std::list<std::string>;
+using token_t = std::vector<std::string>;
 
 token_t tokenize(std::ifstream fpt);
 
