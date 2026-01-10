@@ -3,47 +3,39 @@
 
 #include <fstream>
 #include <string>
+#include <string_view>
 
 typedef struct tok {
-    struct tok* first,
-              * last,
-              * next;
+    tok* next;
     std::string value;
+    bool have_value;
 
     tok() noexcept:
-        first(this), last(this), next(this->last), value("") {}
+        next(nullptr), value(""), have_value(false) {}
 
-    explicit tok(struct tok* first) noexcept:
-        first(first), last(this), next(this->last), value("") {}
+    explicit tok(std::string_view value) noexcept:
+        next(nullptr), value(value), have_value(true) {}
 
-    void append(const std::string& value) noexcept {
-        if (this == this->last)
-            this->value = value;
+    static void append(tok* token, const std::string& value) noexcept {
+        if (!token->have_value) {
+            token->value = value;
+            token->have_value = true;
+        }
         else {
-            *this->last->next = tok(this->first);
-            this->last = this->last->next;
+            const struct tok* head = token;
+            while (!tok::is_last(head))
+                head = head->next;
 
-            this->last->value = value;
+            *head->next = tok(value);
         }
     }
 
-    void append(const char c) noexcept {
-        if (this == this->last)
-            this->value = {c, '\0'};
-        else {
-            *this->last->next = tok(this->first);
-            this->last = this->last->next;
-
-            this->last->value = {c, '\0'};
-        }
+    static void append(tok* token, const char& c) noexcept {
+        tok::append(token, {c, '\0'});
     }
 
-    bool is_last() const noexcept {
-        return this == this->last;
-    }
-
-    static void rotate(const struct tok* token) noexcept {
-        token = token->next;
+    static bool is_last(const tok* token) noexcept {
+        return token->next == nullptr;
     }
 } token_t;
 
