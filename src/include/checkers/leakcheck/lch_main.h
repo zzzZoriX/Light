@@ -75,6 +75,6 @@ CPP_IS_MEM_DEALLOC_WORD(const std::string& word) {
     return false;
 }
 
-#define C_IS_MEM_DEALLOC_WORD(word) (word) == C_DEF_MEM_DEALLOC_METHOD;
+#define C_IS_MEM_DEALLOC_WORD(word) (word) == C_DEF_MEM_DEALLOC_METHOD
 
 #endif // LCH_H
