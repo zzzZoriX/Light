@@ -15,13 +15,27 @@ enum class LightReturnCode : int {
 #include "cmd_common.h"
 #include <cstdlib>
 
+typedef struct err_msg {
+    std::string function,
+                full_line,
+                err_desc;
+    unsigned long line_n;
 
-using error = std::pair<std::string, LightReturnCode>;
+    err_msg(const std::string& f, const std::string& fl, const std::string& ed, const unsigned long ln) noexcept:
+        function(f), full_line(fl), err_desc(ed), line_n(ln) {}
+} error_msg_t;
+
+using error = std::pair<error_msg_t, LightReturnCode>;
 
 #define NOERR error(\
-                    std::move(std::string("")),\
+                    error_msg_t("", "", "", -1),\
                     LightReturnCode::SUCCESS \
                 )
+
+constexpr inline std::string&& convert_error_to_string(const error_msg_t& err) {
+    return "In function " + err.function + ":\n" + std::to_string(err.line_n) +
+           "|  " + err.full_line + "\n" + err.err_desc;
+}
 
 #define LABORT(code, msg) {\
     print_in_one_color(RED, msg);\

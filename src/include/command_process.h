@@ -47,27 +47,52 @@ typedef struct {
 #define CPP20ON_FLAG    "-cpp20"
 
 #define MULTICMDERR error( \
-                        std::move(std::string("Multiply command use")), \
+                        error_msg_t(\
+                        "LIGHTAPI",\
+                        "~~~",\
+                        "Multiply command use",\
+                        -1\
+                        ), \
                         LightReturnCode::MULTARGERR \
                     )
 
 #define MULTIFLAGERR error( \
-                        std::move(std::string("Multiply flag defention")), \
+                        error_msg_t(\
+                        "LIGHTAPI",\
+                        "~~~",\
+                        "Multiply flag defention",\
+                        -1\
+                        ), \
                         LightReturnCode::MULTFLAGERR \
                     )
 
 #define UNEXPINPUTS error( \
-                        std::move(std::string("Unexpected input file in command")), \
+                        error_msg_t(\
+                        "LIGHTAPI",\
+                        "~~~",\
+                        "Unexpected input file in command",\
+                        -1\
+                        ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
 
 #define UNEXPFLAG   error( \
-                        std::move(std::string("Unexpected flag defention")), \
+                        error_msg_t(\
+                        "LIGHTAPI",\
+                        "~~~",\
+                        "Unexpected flag defention",\
+                        -1\
+                        ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
 
 #define NOINPUTS    error( \
-                        std::move(std::string("Check command have not any input files")), \
+                        error_msg_t(\
+                        "LIGHTAPI",\
+                        "~~~",\
+                        "Check command have not any input files",\
+                        -1\
+                        ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
 

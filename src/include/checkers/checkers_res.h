@@ -5,7 +5,7 @@
 #include <vector>
 #include "../errors.h"
 
-using flerrs = std::vector<std::pair<std::string, std::string>>;
+using flerrs = std::vector<std::pair<error_msg_t, std::string>>;
 
 enum class Checker {
     LEAK_CHECKER = 0,

@@ -5,7 +5,7 @@
 // v(a/b/_) - alpha/beta/release ; first num - global version id ; second num - patch version id
 #define LIGHTAPIVERSION     "va-0.1"
 
-int main(int count, char** args) {
+int main(const int count, char** args) {
     if (count < 2) 
         LABORT(
         static_cast<int>(LightReturnCode::CMDLERR),
@@ -24,7 +24,7 @@ int main(int count, char** args) {
     if (code != LightReturnCode::SUCCESS)
         LABORT(
             static_cast<int>(code),
-            msg
+            convert_error_to_string(msg)
         );
 
     
