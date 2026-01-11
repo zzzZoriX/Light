@@ -37,4 +37,6 @@ token_t tokenize(const std::string& line) {
             word += c;
         }
     }
+
+    return token;
 }
