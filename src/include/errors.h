@@ -28,13 +28,15 @@ typedef struct err_msg {
 using error = std::pair<error_msg_t, LightReturnCode>;
 
 #define NOERR error(\
-                    error_msg_t("", "", "", -1),\
+                    error_msg_t("", "", "", 0),\
                     LightReturnCode::SUCCESS \
                 )
 
-constexpr inline std::string&& convert_error_to_string(const error_msg_t& err) {
-    return "In function " + err.function + ":\n" + std::to_string(err.line_n) +
+inline std::string convert_error_to_string(const error_msg_t& err) {
+    std::string res =  "In function " + err.function + ":\n" + std::to_string(err.line_n) +
            "|  " + err.full_line + "\n" + err.err_desc;
+
+    return res;
 }
 
 #define LABORT(code, msg) {\

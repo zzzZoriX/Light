@@ -13,7 +13,12 @@ checker_result_t leak_check(ArgsInfo ainf) {
         if (!ifp.is_open()) {
             res.res_type = CheckerResultType::LIGHTAPIERR;
             res.light_api_err = {
-                "Can't open an input file" + inp,
+                error_msg_t{
+                    "LIGHTAPI",
+                    "~~~",
+                    "Can't open an input file" + inp,
+                    0
+                },
                 LightReturnCode::CANTOPENFILEERR
             };
 

@@ -51,7 +51,7 @@ typedef struct {
                         "LIGHTAPI",\
                         "~~~",\
                         "Multiply command use",\
-                        -1\
+                        0\
                         ), \
                         LightReturnCode::MULTARGERR \
                     )
@@ -61,7 +61,7 @@ typedef struct {
                         "LIGHTAPI",\
                         "~~~",\
                         "Multiply flag defention",\
-                        -1\
+                        0\
                         ), \
                         LightReturnCode::MULTFLAGERR \
                     )
@@ -71,7 +71,7 @@ typedef struct {
                         "LIGHTAPI",\
                         "~~~",\
                         "Unexpected input file in command",\
-                        -1\
+                        0\
                         ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
@@ -81,7 +81,7 @@ typedef struct {
                         "LIGHTAPI",\
                         "~~~",\
                         "Unexpected flag defention",\
-                        -1\
+                        0\
                         ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
@@ -91,7 +91,7 @@ typedef struct {
                         "LIGHTAPI",\
                         "~~~",\
                         "Check command have not any input files",\
-                        -1\
+                        0\
                         ), \
                         LightReturnCode::UNEXPCMDLERR \
                     )
