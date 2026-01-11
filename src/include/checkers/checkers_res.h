@@ -41,21 +41,20 @@ typedef struct flres {
 typedef struct chckr {
     Checker checker;
     std::vector<file_result_t> file_results;
+
+    chckr(const Checker chck) noexcept:
+        checker(chck), file_results() {}
 } checker_info_t;
 
 typedef struct chr_res {
     CheckerResultType res_type;
     error light_api_err;
     checker_info_t checker_result;
+
+    chr_res(const Checker chckr) noexcept:
+        res_type(CheckerResultType::CHECKOFF), light_api_err(NOERR), checker_result(chckr) {}
 } checker_result_t;
 
-#define CHECKER_SUCCESS(chckr) (checker_result_t){\
-    .res_type = CheckerResultType::CHECKOFF,\
-    .light_api_err = NOERR,\
-    .checker_result = {\
-        chckr,\
-        {}\
-    }\
-}
+#define CHECKER_SUCCESS(chckr) checker_result_t(chckr)
 
 #endif //CHECKERS_RES_H
