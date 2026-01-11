@@ -52,6 +52,15 @@ const std::vector<std::string> keywordsCPP20 = {
     "requires"
 };
 
+const std::vector<std::string> keywordsC17 = {
+    "auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else",
+    "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
+    "restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch",
+    "typedef", "union", "unsigned", "void", "volatile", "while",
+    "_Atomic", "_Bool", "_Complex", "_Generic", "_Imaginary", "_Noreturn", "_Static_assert",
+    "_Thread_local"
+};
+
 typedef struct lch_var {
     std::string full_line,
                 var_name;
@@ -63,6 +72,9 @@ typedef struct lch_var {
     lch_var(const std::string& line, const unsigned long line_n, const bool cpp20on) noexcept:
         full_line(line), var_name(lch_var::cpp_get_var_name(line, cpp20on)), line_number(line_n) {}
 
+    lch_var(const std::string& line, const unsigned long line_n) noexcept:
+        full_line(line), var_name(lch_var::c_get_var_name(line)), line_number(line_n) {}
+
     static std::string cpp_get_var_name(const std::string& line, const bool cpp20on) noexcept {
         const token_t words = tokenize(line);
 
@@ -70,13 +82,32 @@ typedef struct lch_var {
             bool is_kw = false;
 
             for (const auto& kw : (cpp20on ? keywordsCPP20 : keywordsCPP17))
-                if (kw == word)
+                if (kw == word) {
                     is_kw = true;
+                    break;
+                }
 
             if (!is_kw)
                 return word;
         }
 
+        return "";
+    }
+    static std::string c_get_var_name(const std::string& line) noexcept {
+        const token_t words = tokenize(line);
+
+        for (const auto& word : words) {
+            bool is_kw = false;
+
+            for (const auto& kw : keywordsC17)
+                if (word == kw) {
+                    is_kw = true;
+                    break;
+                }
+
+            if (!is_kw)
+                return word;
+        }
         return "";
     }
 } lch_var_data;
