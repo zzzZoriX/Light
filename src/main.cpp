@@ -3,7 +3,7 @@
 #include "include/checkers/leakcheck/lch_main.h"
 
 // v(a/b/_) - alpha/beta/release ; first num - global version id ; second num - patch version id
-#define LIGHTAPIVERSION     "va-0.1"
+#define LIGHTAPIVERSION     "va-0.2"
 
 
 int main(const int count, char** args) {
