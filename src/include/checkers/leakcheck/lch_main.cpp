@@ -47,10 +47,10 @@ file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
  * Why do I use a for instead of a for-each?
  * I'll need to navigate through the list of tokens, and it is more convenient to do this using indexes
  */
-    for (std::size_t i = 0; i < tokens.size();) {
+    for (std::size_t i = 0; i < tokens.size(); ++i) {
         line += tokens[i];
 
-        if (tokens[i] == "\n") {
+        if (tokens[i] == std::string{'\n'}) {
             line.clear();
             ++line_n;
             continue;
@@ -96,11 +96,13 @@ file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
                     "potential memory leak",
                     snd.line_number
                 ),
-                std::to_string(snd.line_number) + "|+ delete " + snd.var_name + ";"
+                std::to_string(snd.line_number + 1) + "|+ delete " + snd.var_name + ";"
             });
         }
         flres.have_errs = true;
     }
+
+    current_scope_mem_alloc.clear();
 
     return flres;
 }
