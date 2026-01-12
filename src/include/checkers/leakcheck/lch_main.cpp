@@ -27,14 +27,15 @@ checker_result_t leak_check(ArgsInfo ainf) {
 
         res.checker_result.file_results.push_back(leak_check_file(
                 std::move(ifp),
-                ainf.fs
+                ainf.fs,
+                inp
             ));
     }
 
     return res;
 }
 
-file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
+file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::string& flname) {
     file_result_t flres;
     const token_t tokens = tokenize(std::move(ifp));
     std::map<std::string, lch_var_data> current_scope_mem_alloc;
@@ -43,6 +44,8 @@ file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
 
     flres.flres_t = FileResultType::FLRES;
     flres.have_errs = false;
+    flres.flname = flname;
+
 /*
  * Why do I use a for instead of a for-each?
  * I'll need to navigate through the list of tokens, and it is more convenient to do this using indexes
@@ -80,7 +83,7 @@ file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
             else if (C_IS_MEM_DEALLOC_WORD(tokens[i])) {
                 while (tokens[++i] != ";")
                     line += tokens[i];
-
+                
                 current_scope_mem_alloc.erase(lch_var_data::c_get_var_name(line));
             }
         }
@@ -92,11 +95,11 @@ file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs) {
             flres.errs.push_back({
                 error_msg_t(
                     "main()",
-                    snd.full_line,
+                    snd.full_line.substr(snd.full_line.find_first_not_of(" \t\n\r")),
                     "potential memory leak",
                     snd.line_number
                 ),
-                std::to_string(snd.line_number + 1) + "|+ delete " + snd.var_name + ";"
+                std::to_string(snd.line_number + 1) + "|+ " + (fs._cpp ? "delete " : "free(") + snd.var_name + (fs._cpp ? "" : ")") + ";"
             });
         }
         flres.have_errs = true;
