@@ -5,6 +5,7 @@
 // v(a/b/_) - alpha/beta/release ; first num - global version id ; second num - patch version id
 #define LIGHTAPIVERSION     "va-0.1"
 
+
 int main(const int count, char** args) {
     if (count < 2) 
         LABORT(
@@ -44,7 +45,7 @@ int main(const int count, char** args) {
             break;
 
             case CallType::CHECK:
-            leak_check(args_info);
+            parse_result(leak_check(args_info));
             break;
 
         default:

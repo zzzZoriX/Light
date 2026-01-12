@@ -83,7 +83,7 @@ file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::stri
             else if (C_IS_MEM_DEALLOC_WORD(tokens[i])) {
                 while (tokens[++i] != ";")
                     line += tokens[i];
-                
+
                 current_scope_mem_alloc.erase(lch_var_data::c_get_var_name(line));
             }
         }
