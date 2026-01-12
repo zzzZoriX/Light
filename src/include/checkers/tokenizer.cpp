@@ -4,18 +4,24 @@ token_t tokenize(std::ifstream fpt) {
     token_t token;
     char c;
     std::string word,
-                spec_chars = ",.:[]{}()-+/*^|&%=~!? \"';><";
+                spec_chars = ",.:[]{}()-+/*^|&%=~!? \"';><\n";
 
     while (fpt.get(c)) {
         if (spec_chars.find(c) != std::string::npos) {
-            token.push_back(word);
-            token.push_back({c, '\0'});
+            if (!word.empty()) {
+                token.push_back(word);
+                word.clear();
+            }
 
-            word.clear();
+            token.push_back({c});
         }
         else {
             word += c;
         }
+    }
+
+    if (!word.empty()) {
+        token.push_back(word);
     }
 
     return token;
@@ -24,18 +30,21 @@ token_t tokenize(std::ifstream fpt) {
 token_t tokenize(const std::string& line) {
     token_t token;
     std::string word,
-                spec_chars = ",.:[]{}()-+/*^|&%=~!? \"';><";
+                spec_chars = ",.:[]{}()-+/*^|&%=~!? \"';><\n";
 
-    for (const char& c : line) {
+    for (const char c : line) {
         if (spec_chars.find(c) != std::string::npos) {
-            if (!word.empty())
+            if (!word.empty()) {
                 token.push_back(word);
-
-            word.clear();
-        }
-        else {
+                word.clear();
+            }
+        } else {
             word += c;
         }
+    }
+
+    if (!word.empty()) {
+        token.push_back(word);
     }
 
     return token;
