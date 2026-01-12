@@ -53,9 +53,9 @@ const std::vector<std::string> keywordsCPP20 = {
 };
 
 const std::vector<std::string> keywordsC17 = {
-    "auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else",
-    "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
-    "restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch",
+    "auto", "break", "case", "char", "const", "continue", "calloc", "default", "do", "double", "else",
+    "enum", "extern", "float", "for", "free", "goto", "if", "inline", "int", "long", "malloc", "register",
+    "restrict", "return", "realloc", "short", "signed", "sizeof", "static", "struct", "switch",
     "typedef", "union", "unsigned", "void", "volatile", "while",
     "_Atomic", "_Bool", "_Complex", "_Generic", "_Imaginary", "_Noreturn", "_Static_assert",
     "_Thread_local"
