@@ -34,6 +34,7 @@ typedef struct flres {
     bool have_errs;
     flerrs errs;
     FileResultType flres_t;
+    std::string flname;
 
     flres() noexcept: have_errs(false), flres_t(FileResultType::FLRES) {}
 } file_result_t;
@@ -56,5 +57,8 @@ typedef struct chr_res {
 } checker_result_t;
 
 #define CHECKER_SUCCESS(chckr) checker_result_t(chckr)
+
+void parse_result(checker_result_t& chckr_res);
+void parse_result(checker_result_t&& chckr_res);
 
 #endif //CHECKERS_RES_H
