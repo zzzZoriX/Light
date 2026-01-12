@@ -44,9 +44,10 @@ checker_result_t leak_check(ArgsInfo ainf);
  *
  * @param ifp
  * @param fs
+ * @param flname
  * @return file_result_t
  */
-file_result_t leak_check_file(std::ifstream ifp, struct FlagsState fs);
+file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::string& flname);
 
 static bool
 CPP_IS_MEM_ALLOC_WORD(const std::string& word) {
