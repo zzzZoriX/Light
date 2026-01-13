@@ -89,7 +89,6 @@ file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::stri
         }
     }
 
-//  TODO: do errors creating for remaining memory leaks
     if (!current_scope_mem_alloc.empty()) {
         for (const auto&[_, snd] : current_scope_mem_alloc) {
             flres.errs.push_back({
@@ -99,6 +98,7 @@ file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::stri
                     "potential memory leak",
                     snd.line_number
                 ),
+//              TODO: add logic for defining the solution line number
                 std::to_string(snd.line_number + 1) + "|+ " + (fs._cpp ? "delete " : "free(") + snd.var_name + (fs._cpp ? "" : ")") + ";"
             });
         }
