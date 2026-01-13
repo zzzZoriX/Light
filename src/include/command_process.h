@@ -106,6 +106,6 @@ typedef struct {
  */
 arguments convert_c_strs_to_cpp(char** cstrs, const int count);
 
-error process_arguments(ArgsInfo* ainf, arguments args_vec);
+error process_arguments(ArgsInfo& ainf, const arguments& args_vec);
 
 #endif // CMDPROC_H

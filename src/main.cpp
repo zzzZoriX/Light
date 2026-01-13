@@ -20,7 +20,7 @@ int main(const int count, char** args) {
             .type = CallType::UNDEF
         };
 
-    auto [msg, code] = process_arguments(&args_info, args_vec);
+    auto [msg, code] = process_arguments(args_info, args_vec);
 
     if (code != LightReturnCode::SUCCESS)
         LABORT(
