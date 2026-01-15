@@ -94,6 +94,17 @@ typedef struct smd_t {
 	smd_t() = default;
 
 
+	smd_t(const std::string& name, smd_t&& head, smd_t&& global) noexcept:
+		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
+
+	smd_t(const std::string&& name, smd_t&& head, smd_t&& global) noexcept:
+		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
+
+	
+	smd_t(smd_t&& head, smd_t&& global) noexcept:
+		scope_name(""), head_scope(head), global_scope(global), alloc_objs_data() {}
+
+
 	smd_t(const std::string& name, smd_t& head, smd_t& global) noexcept:
 		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
 
