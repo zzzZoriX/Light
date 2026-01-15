@@ -85,4 +85,11 @@ typedef struct {
 	meta_info_t meta;
 } obj_mdata_t;
 
+typedef struct smd_t {
+	std::string scope_name;
+	std::vector<obj_mdata_t> alloc_objs_data;
+	smd_t head_scope,
+	      global_scope;
+} scope_mdata_t;
+
 #endif //LCH_DATA_H
