@@ -61,6 +61,7 @@ const std::vector<std::string> keywordsC17 = {
     "_Thread_local"
 };
 
+// helper structures
 typedef enum {
 	PTR_T,
 	MDIM_PTR_T, // multidimention pointer like int**** and others
@@ -74,5 +75,14 @@ typedef struct {
 	std::size_t line_n,
 		    last_use_on;
 } meta_info_t;
+
+
+// main structures
+typedef struct {
+	std::string obj_name;
+	obj_malloc_t alloc_type;
+	bool freed;
+	meta_info_t meta;
+} obj_mdata_t;
 
 #endif //LCH_DATA_H
