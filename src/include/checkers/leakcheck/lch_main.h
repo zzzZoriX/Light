@@ -30,24 +30,17 @@ const std::string CPP_DEF_MEM_DEALLOC_METHODS[] = {
     "delete"
 };
 
+/* check file for a leak errors and return result struct */
+checker_result_t leak_check_file(token_t& tok_stream);
 
-/**
- * @brief check inputs for a memory leak errors
- *
- * @param ainf
- * @return checker_result_t
- */
-checker_result_t leak_check(ArgsInfo ainf);
-
-/**
- * @brief check input file for a memory leaks
- *
- * @param ifp
- * @param fs
- * @param flname
- * @return file_result_t
- */
-file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::string& flname);
+/* reqursive check the scope data */
+scope_mdata_t leak_check_scope(
+	token_t::const_iterator& beg, 
+	token_t::const_iterator& end,
+	scope_mdata_t& head,
+	scope_mdata_t& global,
+	const std::string& scope_name
+);
 
 static bool
 CPP_IS_MEM_ALLOC_WORD(const std::string& word) {
@@ -57,7 +50,6 @@ CPP_IS_MEM_ALLOC_WORD(const std::string& word) {
 
     return false;
 }
-
 static bool
 C_IS_MEM_ALLOC_WORD(const std::string& word) {
     for (const auto& w : C_DEF_MEM_ALLOC_METHODS)
