@@ -66,4 +66,13 @@ typedef enum {
 	MDIM_PTR_T, // multidimention pointer like int**** and others
 } obj_malloc_t;
 
+/* 
+	now will unuse because this struct is only need for a solution creating
+*/
+typedef struct {
+	std::string full_line;
+	std::size_t line_n,
+		    last_use_on;
+} meta_info_t;
+
 #endif //LCH_DATA_H
