@@ -2,3 +2,6 @@
 META
 debug/
 .idea/
+*.png
+*.jpg
+*.json
