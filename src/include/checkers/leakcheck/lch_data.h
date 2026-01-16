@@ -25,11 +25,15 @@ typedef struct mi_t {
 
 
 // main structures
-typedef struct {
+typedef struct objd_t {
 	std::string obj_name;
 	obj_malloc_t alloc_type;
 	bool freed;
 	meta_info_t meta;
+
+	bool operator=(const objd_t& other) {
+		return this->obj_name == other.obj_name;
+	}
 } obj_mdata_t;
 
 typedef struct smd_t {
