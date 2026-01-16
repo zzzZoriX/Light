@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cctype>
+#include "lch_data.h"
 
 
 //  took from https://en.cppreference.com/w/cpp/keywords.html
@@ -85,6 +86,14 @@ static bool is_not_func(const std::string& name, const std::vector<std::string>&
 			return false;
 	
 	return true;
+}
+
+static bool inscope(const obj_mdata_t& obj, const scope_mdata_t& scope){
+	for(const auto& scope_obj: scope.alloc_objs_data)
+		if(obj == scope_obj)
+			return true;
+
+	return false;
 }
 
 #endif // LCHCOM_H
