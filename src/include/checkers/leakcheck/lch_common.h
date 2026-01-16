@@ -72,4 +72,19 @@ static bool is_object_name(const std::string& name) {
 	return true;
 }
 
+static bool is_not_func(const std::string& name, const std::vector<std::string>& fnames){
+	if(!std::isalpha(name[0]) && name[0] != '_')
+		return false;
+	
+	for(const auto& ch: name)
+		if(!std::isalnum(ch) && ch != '_')
+			return false;
+
+	for(const auto& fname: fnames)
+		if(name == fname)
+			return false;
+	
+	return true;
+}
+
 #endif // LCHCOM_H
