@@ -32,7 +32,7 @@ const std::string CPP_DEF_MEM_DEALLOC_METHODS[] = {
 };
 
 /* check file for a leak errors and return result struct */
-checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream);
+checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, const FlagsState& fs);
 
 /* reqursive check the scope data */
 scope_mdata_t leak_check_scope(
@@ -41,7 +41,8 @@ scope_mdata_t leak_check_scope(
 	scope_mdata_t& head,
 	scope_mdata_t& global,
 	const std::string& scope_name,
-	const std::vector<std::string> fnames
+	const std::vector<std::string> fnames,
+	const FlagsState& fs
 );
 
 static bool
