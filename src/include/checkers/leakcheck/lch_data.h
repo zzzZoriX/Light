@@ -31,7 +31,10 @@ typedef struct objd_t {
 	bool freed;
 	meta_info_t meta;
 
-	bool operator=(const objd_t& other) {
+	objd_t(const std::string& name, const obj_malloc_t type, const bool freed, meta_info_t meta) noexcept:
+		obj_name(name), alloc_type(type), freed(freed), meta(meta) {}
+
+	bool operator==(const objd_t& other) {
 		return this->obj_name == other.obj_name;
 	}
 } obj_mdata_t;
