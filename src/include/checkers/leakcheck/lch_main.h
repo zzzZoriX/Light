@@ -36,11 +36,12 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream);
 
 /* reqursive check the scope data */
 scope_mdata_t leak_check_scope(
-	token_t::const_iterator& beg, 
-	token_t::const_iterator& end,
+	token_t::iterator& beg, 
+	token_t::iterator& end,
 	scope_mdata_t& head,
 	scope_mdata_t& global,
-	const std::string& scope_name
+	const std::string& scope_name,
+	const std::vector<std::string> fnames
 );
 
 static bool
