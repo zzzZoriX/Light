@@ -119,13 +119,16 @@ Shows the current version of the Light API
 ### 1. -cpp 
 Tells Light that the input file is a C++ file, which means Light will also check new/delete keywords
 
-### 2. -Nleak
+### 2. -cpp20
+tells Light's that the input file had written with C++20 standart
+
+### 3. -Nleak
 tells Light's that memory leaks don't need to be checked
 
-### 3. -Nsegs
+### 4. -Nsegs
 tells Light's that potential segmentation faults don't need to be checked
 
-### 4. -Naddr
+### 5. -Naddr
 tells Light's that address errors don't need to be checked
 
-### P.S.: Flags 2-4 are used to speed up checking by skipping unnecessary checks
+### P.S.: Flags 3-5 are used to speed up checking by skipping unnecessary checks
