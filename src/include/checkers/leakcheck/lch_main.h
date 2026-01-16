@@ -7,6 +7,7 @@
 #include <map>
 #include "../tokenizer.h"
 #include "lch_data.h"
+#include "lch_common.h"
 
 const std::string C_DEF_MEM_ALLOC_METHODS[] = {
     "malloc",
