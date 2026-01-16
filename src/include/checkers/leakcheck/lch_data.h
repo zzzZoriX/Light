@@ -14,10 +14,13 @@ typedef enum {
 /* 
 	now will unuse because this struct is only need for a solution creating
 */
-typedef struct {
+typedef struct mi_t {
 	std::string full_line;
 	std::size_t line_n,
 		    last_use_on;
+	
+	mi_t() noexcept:
+		full_line(""), line_n(1), last_use_on(0) {}
 } meta_info_t;
 
 
