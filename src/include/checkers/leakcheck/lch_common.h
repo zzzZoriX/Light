@@ -96,4 +96,28 @@ static bool inscope(const obj_mdata_t& obj, const scope_mdata_t& scope){
 	return false;
 }
 
+static bool is_cpp17_kw(const std::string& word){
+	for(const auto& kw: keywordsCPP17)
+		if(word == kw)
+			return true;
+
+	return false;
+}
+
+static bool is_cpp20_kw(const std::string& word){
+	for(const auto& kw: keywordsCPP20)
+		if(word == kw)
+			return true;
+
+	return false;
+}
+
+static bool is_c17_kw(const std::string& word){
+	for(const auto& kw: keywordsC17)
+		if(word == kw)
+			return true;
+
+	return false;
+}
+
 #endif // LCHCOM_H
