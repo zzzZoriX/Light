@@ -59,7 +59,7 @@ scope_mdata_t leak_check_scope(
 				obj_malloc_t type = PTR_T;
 
 				while(*(++it) != ";"){
-					metaI.full_line.push_back(*it);
+					metaI.full_line += *it;
 					if(*it == "[") type = MDIM_PTR_T;
 				}
 
@@ -71,7 +71,7 @@ scope_mdata_t leak_check_scope(
 				obj_malloc_t type = PTR_T;
 
 				while(*(++it) != ";"){
-					metaI.full_line.push_back(*it);
+					metaI.full_line += *it;
 					if(*it == "[") type = MDIM_PTR_T;
 				}
 
