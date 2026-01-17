@@ -88,12 +88,12 @@ static bool is_not_func(const std::string& name, const std::vector<std::string>&
 	return true;
 }
 
-static bool inscope(const obj_mdata_t& obj, const scope_mdata_t& scope){
-	for(const auto& scope_obj: scope.alloc_objs_data)
-		if(obj == scope_obj)
-			return true;
+static std::size_t inscope(const obj_mdata_t& obj, const scope_mdata_t& scope){
+	for(std::size_t i = 0; i < scope.alloc_objs_data.size(); ++i)
+		if(obj == scope.alloc_objs_data[i])
+			return i;
 
-	return false;
+	return scope.alloc_objs_data.size();
 }
 
 static bool is_cpp17_kw(const std::string& word){
