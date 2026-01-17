@@ -8,7 +8,7 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, 
 	};
 	std::vector<std::string> function_names;
 	
-	for(const auto it = tok_stream.begin(); it != tok_stream.end(); ++i){
+	for(auto it = tok_stream.begin(); it != tok_stream.end(); ++it){
 		if(is_object_name(*it)){
 			const std::string name{*it};
 
