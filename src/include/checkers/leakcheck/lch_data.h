@@ -47,10 +47,10 @@ typedef struct smd_t {
 
 
 	smd_t(const std::string& name) noexcept:
-		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
+		scope_name(name) {}
 
 	smd_t(const std::string&& name) noexcept:
-		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
+		scope_name(name) {}
 } scope_mdata_t;
 
 #endif //LCH_DATA_H

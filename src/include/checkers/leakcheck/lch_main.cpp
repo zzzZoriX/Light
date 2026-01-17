@@ -4,7 +4,7 @@
 checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, const FlagsState& fs) {
         checker_result_t leak_check_result(Checker::LEAK_CHECKER);
 	std::vector<scope_mdata_t> scopes{
-        	scope_mdata_t(fname, scope_mdata_t(), scope_mdata_t())
+        	scope_mdata_t(fname)
 	};
 	std::vector<std::string> function_names;
 	
@@ -15,7 +15,7 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, 
 			if(*(++it) == "("){
 				function_names.push_back(name);
 
-				while(*(++it) != '{' && *it != ";");
+				while(*(++it) != "{" && *it != ";");
 
 				if(*it == "{")
 					scopes.push_back(leak_check_scope(
