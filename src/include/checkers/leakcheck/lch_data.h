@@ -17,7 +17,7 @@ typedef enum {
 typedef struct mi_t {
 	std::string full_line;
 	std::size_t line_n,
-		    last_use_on;
+		    last_use_on; // now unused but in the future it will be used in solution creating
 	
 	mi_t() noexcept:
 		full_line(""), line_n(1), last_use_on(0) {}
