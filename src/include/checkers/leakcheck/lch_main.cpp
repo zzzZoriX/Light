@@ -31,6 +31,8 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, 
 			}
 		}
 	}
+
+	return leak_check_result;
 }
 
 scope_mdata_t leak_check_scope(
@@ -46,7 +48,7 @@ scope_mdata_t leak_check_scope(
 	scope_mdata_t scope_data(scope_name);
 	std::string current_line_obj_name;
 
-	for(auto it = beg, it != end; ++it){
+	for(auto it = beg; it != end; ++it){
 		if(*it == "\n"){
 			metaI.full_line.clear();
 			++metaI.line_n;
