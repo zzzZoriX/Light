@@ -42,32 +42,15 @@ typedef struct objd_t {
 typedef struct smd_t {
 	std::string scope_name;
 	std::vector<obj_mdata_t> alloc_objs_data;
-	smd_t head_scope,
-	      global_scope;
 	
 	smd_t() = default;
 
 
-	smd_t(const std::string& name, smd_t&& head, smd_t&& global) noexcept:
+	smd_t(const std::string& name) noexcept:
 		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
 
-	smd_t(const std::string&& name, smd_t&& head, smd_t&& global) noexcept:
+	smd_t(const std::string&& name) noexcept:
 		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
-
-	
-	smd_t(smd_t&& head, smd_t&& global) noexcept:
-		scope_name(""), head_scope(head), global_scope(global), alloc_objs_data() {}
-
-
-	smd_t(const std::string& name, smd_t& head, smd_t& global) noexcept:
-		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
-
-	smd_t(const std::string&& name, smd_t& head, smd_t& global) noexcept:
-		scope_name(name), head_scope(head), global_scope(global), alloc_objs_data() {}
-
-	
-	smd_t(smd_t& head, smd_t& global) noexcept:
-		scope_name(""), head_scope(head), global_scope(global), alloc_objs_data() {}
 } scope_mdata_t;
 
 #endif //LCH_DATA_H

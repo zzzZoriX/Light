@@ -41,7 +41,7 @@ scope_mdata_t leak_check_scope(
 	const FlagsState& fs
 ) {
 	meta_info_t metaI;
-	scope_mdata_t scope_data(scope_name, head, global);
+	scope_mdata_t scope_data(scope_name);
 	std::string current_line_obj_name;
 
 	for(auto it = beg, it != end; ++it){
@@ -106,7 +106,7 @@ scope_mdata_t leak_check_scope(
 						);
 					}
 					else if(
-						obj_index_in_other_scopes = inscope(obj, scope_data); 
+						obj_index_in_other_scopes = inscope(obj, global); 
 						obj_index_in_other_scopes != inner_scope_objs_count
 					) {
 						global.alloc_objs_data.erase(
