@@ -1,111 +1,124 @@
 #include "lch_main.h"
 
-checker_result_t leak_check(ArgsInfo ainf) {
-    if (ainf.fs._Nleak)
-        return CHECKER_SUCCESS(Checker::LEAK_CHECKER);
+//	scopes[0] - is always global scope
+checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, const FlagsState& fs) {
+        checker_result_t leak_check_result(Checker::LEAK_CHECKER);
+	std::vector<scope_mdata_t> scopes{
+        	scope_mdata_t(fname, scope_mdata_t(), scope_mdata_t())
+	};
+	std::vector<std::string> function_names;
+	
+	for(const auto it = tok_stream.begin(); it != tok_stream.end(); ++i){
+		if(is_object_name(*it)){
+			const std::string name{*it};
 
-    checker_result_t res{Checker::LEAK_CHECKER};
-    res.checker_result.checker = Checker::LEAK_CHECKER;
-    res.res_type = CheckerResultType::CHECKRES;
+			if(*(++it) == "("){
+				function_names.push_back(name);
 
-    for (const auto& inp : ainf.inputs_vec) {
-        std::ifstream ifp(inp);
-        if (!ifp.is_open()) {
-            res.res_type = CheckerResultType::LIGHTAPIERR;
-            res.light_api_err = {
-                error_msg_t{
-                    "LIGHTAPI",
-                    "~~~",
-                    "Can't open an input file" + inp,
-                    0
-                },
-                LightReturnCode::CANTOPENFILEERR
-            };
+				while(*(++it) != '{' && *it != ";");
 
-            return res;
-        }
-
-        res.checker_result.file_results.push_back(leak_check_file(
-                std::move(ifp),
-                ainf.fs,
-                inp
-            ));
-    }
-
-    return res;
+				if(*it == "{")
+					scopes.push_back(leak_check_scope(
+						it, 
+						tok_stream.end(), 
+						scopes[0], 
+						scopes[0], 
+						name, 
+						function_names
+					));
+			}
+		}
+	}
 }
 
-file_result_t leak_check_file(std::ifstream ifp, FlagsState& fs, const std::string& flname) {
-    file_result_t flres;
-    const token_t tokens = tokenize(std::move(ifp));
-    std::map<std::string, lch_var_data> current_scope_mem_alloc;
-    std::string line;
-    unsigned long line_n = 1;
+scope_mdata_t leak_check_scope(
+	token_t::iterator& beg,
+	token_t::iterator& end,
+	scope_mdata_t& head,
+	scope_mdata_t& global,
+	const std::string& scope_name,
+	const std::vector<std::string> fnames ,
+	const FlagsState& fs
+) {
+	meta_info_t metaI;
+	scope_mdata_t scope_data(scope_name, head, global);
+	std::string current_line_obj_name;
 
-    flres.flres_t = FileResultType::FLRES;
-    flres.have_errs = false;
-    flres.flname = flname;
+	for(auto it = beg, it != end; ++it){
+		if(*it == "\n"){
+			metaI.full_line.clear();
+			++metaI.line_n;
+			
+			continue;
+		}
 
-/*
- * Why do I use a for instead of a for-each?
- * I'll need to navigate through the list of tokens, and it is more convenient to do this using indexes
- */
-    for (std::size_t i = 0; i < tokens.size(); ++i) {
-        line += tokens[i];
+		if(fs._cpp){
+			if(CPP_IS_MEM_ALLOC_WORD(*it)){
+				obj_malloc_t type = PTR_T;
 
-        if (tokens[i] == std::string{'\n'}) {
-            line.clear();
-            ++line_n;
-            continue;
-        }
+				while(*(++it) != ";"){
+					metaI.full_line.push_back(*it);
+					if(*it == "[") type = MDIM_PTR_T;
+				}
 
-        if (fs._cpp) {
-            if (CPP_IS_MEM_ALLOC_WORD(tokens[i])) {
-                while (tokens[++i] != ";")
-                    line += tokens[i];
+				scope_data.alloc_objs_data.push_back(
+					obj_mdata_t(current_line_obj_name, type, false, metaI)
+				);
+			}
+			else if(CPP_IS_MEM_DEALLOC_WORD(*it)){
+				obj_malloc_t type = PTR_T;
 
-                current_scope_mem_alloc[lch_var_data::cpp_get_var_name(line, fs._cpp_20_on)] = lch_var_data(line, line_n, fs._cpp_20_on);
-            }
-            else if (CPP_IS_MEM_DEALLOC_WORD(tokens[i])) {
-                while (tokens[++i] != ";")
-                    line += tokens[i];
+				while(*(++it) != ";"){
+					metaI.full_line.push_back(*it);
+					if(*it == "[") type = MDIM_PTR_T;
+				}
 
-                current_scope_mem_alloc.erase(lch_var_data::cpp_get_var_name(line, fs._cpp_20_on));
-            }
-        }
-        else {
-            if (C_IS_MEM_ALLOC_WORD(tokens[i])) {
-                while (tokens[++i] != ";")
-                    line += tokens[i];
+				scope_data.alloc_objs_data.push_back(
+					obj_mdata_t(current_line_obj_name, type, true, metaI)
+				);
+			}
+		}
+		else{
+//		C-kw handler...
+		}
 
-                current_scope_mem_alloc[lch_var_data::c_get_var_name(line)] = lch_var_data(line, line_n);
-            }
-            else if (C_IS_MEM_DEALLOC_WORD(tokens[i])) {
-                while (tokens[++i] != ";")
-                    line += tokens[i];
+		if(*it == "{"){
+			scope_mdata_t inner_scope_data = leak_check_scope(++it, end, scope_data, global, scope_name, fnames, fs);
+			std::size_t inner_scope_objs_count = inner_scope_data.alloc_objs_data.size();
 
-                current_scope_mem_alloc.erase(lch_var_data::c_get_var_name(line));
-            }
-        }
-    }
+			for(std::size_t i = 0; i < = inner_scope_objs_count; ++i){
+				auto obj = inner_scope_data.alloc_objs_data[i];
+				
+				if(obj.freed){
+//			now i using a very slow algorithm and in the future i'll replace it with more effectivency algorithm
+					std::size_t obj_index_in_other_scopes;
 
-    if (!current_scope_mem_alloc.empty()) {
-        for (const auto&[_, snd] : current_scope_mem_alloc) {
-            flres.errs.push_back({
-                error_msg_t(
-                    "main()",
-                    snd.full_line.substr(snd.full_line.find_first_not_of(" \t\n\r")),
-                    "potential memory leak",
-                    snd.line_number
-                ),
-//              TODO: add logic for defining the solution line number
-                std::to_string(snd.line_number + 1) + "|+ " + (fs._cpp ? "delete " : "free(") + snd.var_name + (fs._cpp ? "" : ")") + ";"
-            });
-        }
-        flres.have_errs = true;
-    }
+					if(
+						obj_index_in_other_scopes = inscope(obj, scope_data); 
+						obj_index_in_other_scopes != inner_scope_objs_count
+					) {
+						scope_data.alloc_objs_data.erase(
+							scope_data.alloc_objs_data.begin() + obj_index_in_other_scopes
+						);
+						
+						inner_scope_data.alloc_objs_data.erase(
+							inner_scope_data.alloc_objs_data.begin() + i
+						);
+					}
+					else if(
+						obj_index_in_other_scopes = inscope(obj, scope_data); 
+						obj_index_in_other_scopes != inner_scope_objs_count
+					) {
+						global.alloc_objs_data.erase(
+							global.alloc_objs_data.begin() + obj_index_in_other_scopes
+						);
 
-    current_scope_mem_alloc.clear();
-
-    return flres;
+						inner_scope_data.alloc_objs_data.erase(
+							inner_scope_data.alloc_objs_data.begin() + i
+						);
+					}
+				}
+			}
+		}
+	}
 }
