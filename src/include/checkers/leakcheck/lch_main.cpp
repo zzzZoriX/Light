@@ -88,7 +88,7 @@ scope_mdata_t leak_check_scope(
 			scope_mdata_t inner_scope_data = leak_check_scope(++it, end, scope_data, global, scope_name, fnames, fs);
 			std::size_t inner_scope_objs_count = inner_scope_data.alloc_objs_data.size();
 
-			for(std::size_t i = 0; i < = inner_scope_objs_count; ++i){
+			for(std::size_t i = 0; i < inner_scope_objs_count; ++i){
 				auto obj = inner_scope_data.alloc_objs_data[i];
 				
 				if(obj.freed){
@@ -123,4 +123,6 @@ scope_mdata_t leak_check_scope(
 			}
 		}
 	}
+	
+	return scope_data;
 }
