@@ -44,8 +44,20 @@ int main(const int count, char** args) {
 
             break;
 
-            case CallType::CHECK:
-            parse_result(leak_check(args_info));
+        case CallType::CHECK:
+	    	for(const auto& fl: args_info.inputs_vec){
+			std::ifstream ifp(fl);
+			if(!ifp.is_open()){
+				LABORT(
+					static_cast<int>(LightReturnCode::CANTOPENFILEERR),
+					"Can't open an input file: " + fl
+				);
+			}	
+
+			auto tokens = tokenize(std::move(ifp));
+
+			parse_result(leak_check_file(fl, tokens, args_info.fs));
+	    	}
             break;
 
         default:
