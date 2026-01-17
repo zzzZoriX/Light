@@ -89,9 +89,10 @@ static bool is_not_func(const std::string& name, const std::vector<std::string>&
 }
 
 static std::size_t inscope(const obj_mdata_t& obj, const scope_mdata_t& scope){
-	for(std::size_t i = 0; i < scope.alloc_objs_data.size(); ++i)
+	for(std::size_t i = 0; i < scope.alloc_objs_data.size(); ++i){
 		if(obj == scope.alloc_objs_data[i])
 			return i;
+	}
 
 	return scope.alloc_objs_data.size();
 }
