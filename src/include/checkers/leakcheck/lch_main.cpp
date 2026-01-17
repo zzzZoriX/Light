@@ -7,8 +7,9 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, 
         	scope_mdata_t(fname)
 	};
 	std::vector<std::string> function_names;
+	auto end = tok_stream.end();
 	
-	for(auto it = tok_stream.begin(); it != tok_stream.end(); ++it){
+	for(auto it = tok_stream.begin(); it != end; ++it){
 		if(is_object_name(*it)){
 			const std::string name{*it};
 
@@ -20,11 +21,12 @@ checker_result_t leak_check_file(const std::string& fname, token_t& tok_stream, 
 				if(*it == "{")
 					scopes.push_back(leak_check_scope(
 						it, 
-						tok_stream.end(), 
+						end,
 						scopes[0], 
 						scopes[0], 
 						name, 
-						function_names
+						function_names,
+						fs
 					));
 			}
 		}
